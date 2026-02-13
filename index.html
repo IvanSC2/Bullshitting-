@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NFC Magic Video</title>
+    <style>
+        /* Eliminamos márgenes y forzamos el fondo negro */
+        body, html { 
+            margin: 0; 
+            padding: 0; 
+            width: 100%; 
+            height: 100%; 
+            background-color: black; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            overflow: hidden; 
+        }
+        /* El vídeo ocupará toda la pantalla disponible */
+        video { 
+            width: 100vw; 
+            height: 100vh; 
+            object-fit: contain; /* Cambia a 'cover' si quieres que llene toda la pantalla sin franjas negras */
+        }
+    </style>
+</head>
+<body>
+
+    <video id="videoMágico" autoplay muted playsinline loop>
+        <source src="video.mp4" type="video/mp4">
+        Tu navegador no soporta video.
+    </video>
+
+    <script>
+        const v = document.getElementById('videoMágico');
+        
+        // Al ser un móvil, si el usuario toca la pantalla, quitamos el silencio
+        document.body.addEventListener('click', () => {
+            if (v.muted) {
+                v.muted = false;
+            }
+        });
+
+        // Forzar reproducción por si el ahorro de batería de tu Xiaomi lo detiene
+        window.addEventListener('load', () => {
+            v.play().catch(error => {
+                console.log("El autoplay requiere interacción previa para el sonido.");
+            });
+        });
+    </script>
+</body>
+</html>
